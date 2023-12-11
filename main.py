@@ -26,14 +26,13 @@ ax.xaxis.set_ticks_position('bottom')
 ax.spines['bottom'].set_position(('data', 0))
 ax.yaxis.set_ticks_position('left')
 ax.spines['left'].set_position(('data', 0))
-plt.savefig('starting_xy_axis.png', bbox_inches='tight')
+plt.savefig('starting_xy_axis.png', bbox_inches='tight', dpi=500)
 '''
 
 formatted_field = ''
 
 
 def draw_field():
-    print(formatted_field)
     x, y = np.meshgrid(np.linspace(-10, 10, 15),
                        np.linspace(-10, 10, 15))
     u = eval(formatted_field[0])
@@ -49,7 +48,7 @@ def draw_field():
     ax.spines['bottom'].set_position(('data', 0))
     ax.yaxis.set_ticks_position('left')
     ax.spines['left'].set_position(('data', 0))
-    plt.savefig('new_xy_axis.png', bbox_inches='tight')
+    plt.savefig('new_xy_axis.png', bbox_inches='tight', dpi=500)
 
 
 def format_field(vector_field):
@@ -98,9 +97,11 @@ def add_paddle_wheel():
         xdy = diff(x_component, y)
         ydx = ydx.subs([(x, x_position * 3.7037037037), (y, y_position * 3.7037037037)])
         xdy = xdy.subs([(x, x_position * 3.7037037037), (y, y_position * 3.7037037037)])
+        print(ydx, xdy)
+        #print(x_position * 3.7037037037, y_position * 3.7037037037)
 
         curl = ydx - xdy
-
+        print(curl)
         e.rotation_z = e.rotation_z - (0.05 * curl)
         b.rotation_z = b.rotation_z - (0.05 * curl)
 
@@ -116,7 +117,6 @@ def add_paddle_wheel():
 submit_button = Button(text='submit', position=(0.4, -0.4), scale=0.1, )
 submit_button.on_click = on_submit
 input_field = InputField(position=(0, -0.4))
-b = Entity(model='quad', scale=0.25, scale_x=0.05, color=color.blue, position=(2.7, 0, -0.6))
 xy_axis = Entity(model='quad', scale=6, texture='starting_xy_axis.png', collider='box', on_click=add_paddle_wheel,
                  z=-0.5)  # 2.6
 
